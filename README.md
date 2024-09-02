@@ -1,4 +1,4 @@
-# NASSCOM-VSD SOC Pysical Design Training
+# NASSCOM-VSD SOC Physical Design Training
 
 #  RTL to GDSII flow using OpenLane
 
