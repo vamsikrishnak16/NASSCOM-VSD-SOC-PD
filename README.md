@@ -1,8 +1,8 @@
-# NASSCOM-VSD SOC Pysical Design RTL to GDS Training using OpenLane
+# NASSCOM-VSD SOC Pysical Design Training
 
-# OpenLane Workshop
+#  RTL to GDSII flow using OpenLane
 
-Welcome to the OpenLane workshop! This workshop will guide you through the process of designing an Application Specific Integrated Circuit (ASIC) using the OpenLane ASIC flow. We will cover everything from the Register Transfer Level (RTL) design to generating the final Graphical Data System (GDS) file. The process involves several critical steps, starting with an RTL file and ending with a GDS file.
+This will guide you through the process of designing an Application Specific Integrated Circuit (ASIC) using the OpenLane ASIC flow. We will cover everything from the Register Transfer Level (RTL) design to generating the final Graphical Data System (GDS) file. The process involves several critical steps, starting with an RTL file and ending with a GDS file.
 
 ## Key Learnings
 
