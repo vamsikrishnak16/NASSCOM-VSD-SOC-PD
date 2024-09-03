@@ -94,7 +94,6 @@ Before the design is sent for fabrication, it undergoes several signoff checks t
 
 ![image](https://github.com/user-attachments/assets/53c70a9b-9f2b-47ab-8232-3b7ec3d96246)
 
-
 ## Importance of the RTL to GDSII Flow
 
 The RTL to GDSII flow is vital for the following reasons:
@@ -116,6 +115,10 @@ OpenLane facilitates the transition from Register Transfer Level (RTL) design to
 - **Macro Hardening**: Converting a macro from its HDL representation into a manufacturable layout.
 - **SoC Integration**: Combining multiple macros into a cohesive System-on-a-Chip (SoC) design.
 
+# OpenLANE ASIC Design Flow
+
+The diagram below depicts the comprehensive ASIC design flow implemented in OpenLANE. The process starts with the Design RTL (Register Transfer Level), which is then synthesized into an optimized gate-level netlist using Yosys and ABC. This netlist is subsequently analyzed using Static Timing Analysis (STA) to identify any potential timing violations. Optionally, the flow can include Design for Test (DFT), utilizing the FAULT tool to enhance testability.
+
 ![image](https://github.com/user-attachments/assets/ea2a0188-3dd8-4378-ae46-e159f85a976f)
 
 
@@ -128,6 +131,11 @@ The OpenLane flow utilizes a range of open-source Electronic Design Automation (
 - **KLayout**: For layout viewing and verification
 
 These tools work in concert to automate various stages of the ASIC design process, from synthesis to physical verification.
+
+
+![image](https://github.com/user-attachments/assets/e3cf9c1d-e3b9-47e3-b18d-72dfb616b1b5)
+
+
 
 ### Versions
 
@@ -149,6 +157,68 @@ OpenLane is available in two main versions:
 
 - **SoC Integration**: OpenLane supports the integration of various macros into a complete chip design, which is crucial for developing complex SoCs that incorporate multiple functional blocks.
 
+# RTL2GDS OpenLANE ASIC Flow: Practical Implementation
+
+## Day 1 Labs
+
+### Linux Command Basics
+
+1. **pwd**: Displays the current working directory path.
+2. **ls**: Lists all files and directories in the current location.
+3. **cd**: Navigate between directories within the directory tree.
+4. **mkdir**: Creates a new directory.
+5. **rmdir**: Deletes an empty directory.
+6. **rm**: Removes files or directories.
+7. **cp**: Copies files or directories.
+8. **mv**: Moves or renames files or directories.
+9. **cat**: Displays the contents of a file.
+10. **clear**: Clears the terminal screen.
+11. **help**: Provides information on the usage of other commands.
+
+### File extensions and their Purpose
+
+  - **libs.ref**: Contains design libraries essential for the ASIC flow.
+  - **lef**: Library Exchange Format files describing cell layouts.
+  - **lib**: Liberty files used for timing and power analysis.
+  - **gds**: GDSII files containing the graphical layout of cells.
+  - **verilog**: Verilog models for simulation and design verification.
+  - **libs.tech**: Technology files tailored for EDA tools.
+  - **magic**: Files specific to Magic layout tool.
+  - **klayout**: KLayout technology files and layer properties.
+  - **ngspice**: SPICE models for circuit simulations.
+  - **openroad**: Configuration files for OpenROAD flow.
+  - **drc**: Design Rule Check files.
+  - **lvs**: Layout Versus Schematic check files.
+  - **pex**: Parasitic Extraction files.
+
+## Flowchart for running synthesis in OpenLane
+
+![image](https://github.com/user-attachments/assets/28c7a0db-320a-4083-b461-03a93f7a7365)
 
 
+### Proceed with the steps outlined
 
+To start working with OpenLane, open your terminal and navigate to the following directory:
+
+     cd /Desktop/work/tools/openlane_working_dir/openlane
+
+#### Running OpenLane in Docker
+
+Execute the following command to run OpenLane in Docker:
+
+     docker
+
+
+![Screenshot 2024-08-29 121716](https://github.com/user-attachments/assets/44931662-412a-442e-97f6-0ed8344321fb)
+
+
+To start the tool in interactive mode, execute the following command:
+
+`bash`
+
+./flow.tcl -interactive
+
+To import the required package and prepare the design, execute the command below:
+
+    % package require openlane 0.9
+    % prep -design picorv32a
