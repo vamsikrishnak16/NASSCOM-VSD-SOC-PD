@@ -844,5 +844,161 @@ run_placement
 
 ![Screenshot 2024-09-01 221229](https://github.com/user-attachments/assets/016c65f4-12fe-431d-a5b4-5917091be2d3)
 
-## Day 5
+### TritonCTS
 
+TritonCTS is a tool within the OpenROAD framework designed for clock tree synthesis (CTS) in integrated circuit design. It focuses on creating low-power, low-skew, and low-latency clock distribution networks using the generalized H-Tree (GH-Tree) methodology. TritonCTS employs a dynamic programming algorithm to determine an optimal clock tree topology that minimizes power while adhering to specified latency and skew targets. It utilizes linear programming for sink clustering and clock buffer placement, ensuring efficient routing at the leaf level through either single-trunk or multi-trunk Steiner tree algorithms. The tool interfaces with the placer (RePlAce) for legalizing inserted clock buffers and with the router (TritonRoute) for mapping sink pins to appropriate routing cells. Outputs from TritonCTS include buffered placed DEF files and global routing information, making it a crucial component in the layout generation flow for modern SoC designs
+
+To run the CTS process, execute the following command:
+
+	  run_cts
+
+To enhance the timing section after CTS, execute the following commands:
+
+```tcl
+set ::env(CURRENT_DEF) /openLANE_flow/designs/picorv32a/runs/01-09_11-26/results/placement/picorv32a.placement.def
+echo $::env(CTS_CLK_BUFFER_LIST)
+set ::env(CTS_CLK_BUFFER_LIST) [lreplace $::env(CTS_CLK_BUFFER_LIST) 0 0]
+echo $::env(CTS_CLK_BUFFER_LIST)
+run_cts
+```
+
+The commands above reduce delay by constructing the Clock Tree Synthesis (CTS) using buffers with multiple inputs. This approach eliminates the need for single-input buffers placed sequentially, thereby minimizing delay.
+
+![Screenshot 2024-09-02 010340](https://github.com/user-attachments/assets/cd926796-b86d-47a0-b3b1-0f9bc0eb3805)
+
+![Screenshot 2024-09-02 011839](https://github.com/user-attachments/assets/640ec225-e38f-402d-8246-32c0d36745d9)
+
+![Screenshot 2024-09-02 011940](https://github.com/user-attachments/assets/1e303c13-ac64-49a5-b43e-ad5d01cc4515)
+
+## Day 5
+## Routing
+
+## Power Distribution Network (PDN) Generation in OpenLANE
+
+In OpenLANE, the Power Distribution Network (PDN) is essential for ensuring proper power delivery throughout the chip. Below are the steps to generate the PDN:
+
+## 1. PDN Generation
+
+- The PDN is responsible for delivering sufficient power to all standard cells and macros.
+- It establishes a network of power rails (VDD and VSS) across the entire chip.
+
+## 2. Utilizing the `gen_pdn` Procedure
+
+- The `gen_pdn` procedure is used to execute the PDN generation process.
+- It configures the power grid, defines the power rails, and ensures correct connectivity.
+
+## Common Issues
+
+1. **`LIB_SYNTH_COMPLETE`:**
+   - This variable should be defined in the `config.tcl` file.
+   - It is invoked by the `gen_pdn` procedure within the `or_pdn.tcl` file.
+
+2. **`LEF_MERGED_UNPADDED`:**
+   - Confirm that this variable is properly set in the `config.tcl` file.
+   - It provides necessary details for PDN generation.
+
+Run the PDN generation by executing the following commands:
+
+```tcl
+echo $::env(CURRENT_DEF)
+set ::env(CURRENT_DEF) /openLANE_flow/designs/picorv32a/runs/01-09_11-26/results/cts/picorv32a.cts.def
+gen_pdn
+```
+
+![Screenshot 2024-09-02 021351](https://github.com/user-attachments/assets/c4a78edb-1f06-4eb7-b821-88b62cbb137d)
+
+![Screenshot 2024-09-02 021440](https://github.com/user-attachments/assets/b2cc503b-049d-43b9-8f01-2561e93ca955)
+
+## VLSI Routing: Tracks and Routes
+
+Understanding the concepts of tracks and routes is essential for designing efficient interconnects in VLSI. Below is an overview:
+
+### Tracks
+
+- **What are Tracks?**  
+  Tracks are predefined pathways on each metal layer, arranged in horizontal and vertical orientations. They guide the placement of metal traces on the chip.
+
+- **Why are Tracks Important?**  
+  - Tracks maintain consistent spacing and alignment during the routing process.
+  - They simplify the routing process by providing fixed paths, facilitating easier design of interconnections.
+
+### Routes
+
+- **What are Routes?**  
+  Routes are the metal traces that carry signals, functioning as interconnects or wires. These traces are laid out over the tracks, following specific routing guidelines.
+
+- **Why are Routes Important?**  
+  - Routes link different components (or cells) within the chip.
+  - They establish the wiring network that enables data flow across the chip.
+
+### `tracks.info` File
+
+The `tracks.info` file contains:
+- Information about the horizontal and vertical tracks on each metal layer.
+- Details such as pitch, spacing, and other critical parameters necessary for effective routing.
+
+## VLSI Routing: Global Route and Detail Route
+
+In VLSI design, the routing process is divided into two primary stages: global routing and detailed routing. Here's a brief overview of each stage:
+
+### 1. Global Routing (Fast Route)
+
+- **Objective:**
+  - Global routing aims to quickly establish a preliminary routing plan.
+  - It divides the chip into a grid of rectangular cells, creating a 3D routing graph.
+
+- **Highlights:**
+  - This stage generates a routing guide, represented by boxes that indicate the locations of cell pins.
+  - The output of global routing is a set of routing guides for each net, providing a coarse route.
+
+### 2. Detailed Routing
+
+- **Execution by TritonRoute:**
+  - Detailed routing is carried out by the engine known as TritonRoute.
+  - It refines the preliminary routing solution provided by the global routing stage.
+
+- **Utilizing Global Routing Output:**
+  - Detailed routing takes the routing guides from the global routing stage as input.
+  - It applies advanced algorithms to optimize the connectivity and finalize the routing paths.
+
+Fix the routing strategy from the configuration tcl file and then, to implement routing strategies and complete the routing process, use the following commands:
+
+```tcl
+echo $::env(CURRENT_DEF)
+echo $::env(ROUTING_STRATEGY)
+run_routing
+```
+
+###  Post Routing STA
+Again configure timing analysis using OpenSTA tool by fixing a strategy and give the following commands:
+
+```tcl
+set ::env(SYNTH_STRATEGY) "DELAY 3"
+echo $::env(SYNTH_BUFFERING)
+echo $::env(SYNTH_SIZING)
+set ::env(SYNTH_SIZING) 1
+echo $::env(SYNTH_DRIVING_CELL)
+openroad
+read_lef /openLANE_flow/designs/picorv32a/runs/01-09_11-26/tmp/merged.lef
+read_def /openLANE_flow/designs/picorv32a/runs/01-09_11-26/results/cts/picorv32a.cts.def
+write_db pico_cts1.db
+read_db pico_cts1.db
+read_verilog /openLANE_flow/designs/picorv32a/runs/01-09_11-26/results/synthesis/picorv32a.synthesis_cts.v
+link_design picorv32a
+read_sdc /openLANE_flow/designs/picorv32a/src/my_base.sdc
+set_propagated_clock [all_clocks]
+report_checks -path_delay min_max -fields {slew trans net cap input_pin} -format full_clock_expanded -digits 4
+```
+
+![Screenshot 2024-09-02 033206](https://github.com/user-attachments/assets/2ed6a15c-8cea-4f37-acca-459b55e57e9f)
+
+![Screenshot 2024-09-02 024438](https://github.com/user-attachments/assets/f06824e0-bdaf-4c62-af88-e77a04afe12a)
+
+![Screenshot 2024-09-02 034742](https://github.com/user-attachments/assets/b93b2918-b7da-4c79-9d1b-30558d91d978)
+
+![Screenshot 2024-09-02 035031](https://github.com/user-attachments/assets/bc7a3d4d-8d1a-44db-a457-6fbc13f867b4)
+
+![Screenshot 2024-09-02 033636](https://github.com/user-attachments/assets/187f94b9-ce79-4a0f-9e39-2b0816930e90)
+
+## 🔗 Links
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/vamsi-krishna-kothapalli/)
