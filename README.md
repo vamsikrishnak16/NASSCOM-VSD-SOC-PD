@@ -318,7 +318,7 @@ To run the floorplan process, execute the following command:
 
 After completing the floorplan, you can evaluate the generated report to analyze aspects like die area. For graphical visualization of the design, utilize the MAGIC tool.
 
-
+Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-08_07-04/results/placement$ magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &
 
 ![Screenshot 2024-08-29 185321](https://github.com/user-attachments/assets/d431d535-c40f-4020-b70c-73675b711a53)
 
