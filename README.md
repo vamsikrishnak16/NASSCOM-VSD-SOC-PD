@@ -413,6 +413,16 @@ To run the placement process, execute the following command:
 
 ## Placement Layout Review in Magic
 
-After completing the placement, you can have the graphical visualization of the design by opening the MAGIC tool using the code:
+After completing the placement, you can have the graphical visualization of the design in the MAGIC tool. Open the MAGIC tool by executing the code:
 
      /Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-08_07-04/results/placement$ magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &
+
+![Screenshot 2024-08-30 093321](https://github.com/user-attachments/assets/e1ea47bc-a444-492a-ad1f-158f33508ebf)
+
+### Outputs
+
+- **GDSII:** The layout file in GDSII format, used for fabrication.
+- **Spice Extracted Netlist:** Contains parasitic information for accurate circuit simulation.
+- **LEF (Library Exchange Format):** Provides details about cell sizes, pin locations, and other essential information.
+- **Timing, Noise, and Power Libraries:** Generated during the characterization process.
+- **CDL (Circuit Description Language):** A textual representation of the circuit.
