@@ -426,3 +426,136 @@ After completing the placement, you can have the graphical visualization of the 
 - **LEF (Library Exchange Format):** Provides details about cell sizes, pin locations, and other essential information.
 - **Timing, Noise, and Power Libraries:** Generated during the characterization process.
 - **CDL (Circuit Description Language):** A textual representation of the circuit.
+
+## Day 3
+
+## Design library cell using Magic Layout and ngspice characterization
+
+### CMOS Inverter Simulation with ngspice
+
+This guide covers the creation of a basic CMOS inverter netlist and the execution of DC and transient analyses using ngspice. You will learn how to evaluate key static and dynamic characteristics of the inverter.
+
+#### Static Characteristics
+
+1. **Switching Threshold (Vth):**
+   - The voltage level at which the inverter shifts from a high state (logic 1) to a low state (logic 0).
+2. **Input High Voltage (Vih):**
+   - The minimum input voltage recognized as logic 1.
+3. **Input Low Voltage (Vil):**
+   - The maximum input voltage recognized as logic 0.
+4. **Output High Voltage (Voh):**
+   - The voltage at which the output switches from low to high.
+5. **Output Low Voltage (Vol):**
+   - The voltage at which the output switches from high to low.
+6. **Noise Margins:**
+   - The voltage ranges between Vil and Vol (low noise margin) and between Vih and Voh (high noise margin).
+
+#### Dynamic Characteristics
+
+1. **Propagation Delays:**
+   - The duration it takes for the output to respond to an input change.
+2. **Rise Time (tr):**
+   - The time required for the output to rise from Vol to Voh.
+3. **Fall Time (tf):**
+   - The time required for the output to fall from Voh to Vol.
+
+### Design Library Cell Using Magic Layout and ngspice Characterization
+
+#### Creating a Standard Cell Layout
+
+1. **Design the Inverter Layout:**
+   - Utilize a layout tool (such as MAGIC) to draft the inverter layout.
+   - Adhere to process-specific design rules and guidelines.
+   - Position standard cells (transistors, metal layers, etc.) according to the logical schematic.
+
+2. **Extraction Process:**
+   - After completing the layout, extract parasitic capacitances and resistances.
+   - In the `tkcon` window, run the command `extract all`.
+   - This action generates an extracted file containing parasitic details (e.g., capacitances, interconnect resistance).
+   - The extracted file will be saved in the `vsdstdcelldesign` directory.
+
+3. **SPICE Netlist:**
+   - Use the extracted data to assemble a SPICE-compatible netlist (typically in `.sp` or `.cir` format).
+   - Incorporate transistor models, capacitances, and resistances.
+   - This netlist will be used for simulations in tools like ngspice.
+
+### Introduction to LEF Files in VLSI Design
+
+LEF (Library Exchange Format) files are crucial for interfacing between layout tools and place-and-route (PnR) tools in VLSI (Very Large Scale Integration) design.
+
+#### Purpose of LEF Files
+
+- **Layout Abstraction:**
+  - LEF files provide an abstract representation of a block, such as a macro or a standard cell, containing only the essential details required for PnR tools.
+- **Essential Information:**
+  - Instead of the entire layout, PnR tools need minimal information, including the PR boundary (bounding box) and pin positions.
+
+## LEF Files
+
+### Technology LEF
+Contains details about the metal layers, vias, and DRC (Design Rule Check) technology used by the placer and router.
+
+### Cell LEF
+Provides an abstract view of the cell, including information about the placement and routing (PR) boundary, pin positions, and metal layer details.
+
+## VLSI Routing: Tracks and Routes
+
+Understanding tracks and routes is crucial for effective interconnect design in VLSI. Here's an overview:
+
+### Tracks
+
+- **Definition**: 
+  Tracks are predefined paths on each metal layer, oriented horizontally and vertically. They serve as guides for routing metal traces within a chip.
+
+- **Purpose**:
+  - Tracks ensure uniform spacing and alignment during the routing process.
+  - They simplify routing by providing fixed paths, making it easier to design interconnections.
+
+### Routes
+
+- **Definition**: 
+  Routes are the metal traces that actually carry signals, such as interconnects or wires. These traces are placed over the tracks, adhering to specified routing rules.
+
+- **Functionality**:
+  - Routes connect different components (cells) within the chip.
+  - They create the wiring network necessary for data flow.
+
+### `tracks.info` File
+
+The `tracks.info` file includes:
+- Details about horizontal and vertical tracks on each metal layer.
+- Information on pitch, spacing, and other relevant parameters essential for efficient routing.
+
+### Extracting Parasitics and Characterizing the Cell Design
+
+To extract parasitics and characterize the cell design, use the following commands in the `tkcon` window:
+
+    extract all
+    ext2spice cthresh 0 rthresh 0
+    ext2spice
+
+![Screenshot 2024-08-31 143643](https://github.com/user-attachments/assets/533b74c3-bd8c-45b0-9d51-f0eda36700ee)
+
+![Screenshot 2024-08-31 143902](https://github.com/user-attachments/assets/a2ded976-37ae-4761-b8df-213b5ec65bea)
+
+![Screenshot 2024-08-31 163734](https://github.com/user-attachments/assets/3c1ee6cc-4de8-45b3-9ca6-3e46d5e8e39c)
+
+
+![Screenshot 2024-08-31 111906](https://github.com/user-attachments/assets/e52dd281-0d1a-4054-86f7-bfa3e19f5ebc)
+
+
+Layout view of cmos inverter in MAGIC tool
+ [vsdstdcelldesign](https://github.com/nickson-jose/vsdstdcelldesign) 
+
+Install ngspice tool by using the command in the openlane terminal
+
+     sudo apt-get install ngspice 
+
+The next step is to execute the SPICE file using the ngspice tool with the following command:
+
+     ngspice sky130_inv.spice
+
+![Screenshot 2024-08-31 170900](https://github.com/user-attachments/assets/131cdf1e-2f0c-49cf-b8e9-6058f7b6363f)
+
+![Screenshot 2024-08-31 171025](https://github.com/user-attachments/assets/ddccb894-b503-4b19-bbb4-c180303dc83b)
+
