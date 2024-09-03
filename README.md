@@ -592,3 +592,143 @@ This section examines various layout geometries (M3.1, M3.2, M3.5, and M3.6) and
 open the Magic tool with the command
 
      magic -d XR
+
+### Lab exercise to fix Metal 3 by Creating a VIA2 Mask
+
+![Screenshot 2024-09-02 125608](https://github.com/user-attachments/assets/209fb95d-6637-4dc9-ab70-ba3d21e70885)
+
+
+This guide demonstrates how to fill a selected area with metal 3 and create a VIA2 mask using the Magic layout tool.
+
+## Steps:
+
+1. **Fill an Area with Metal 3:**
+   - Launch the Magic GUI.
+   - Select the area you want to fill on your layout.
+   - Move the pointer to the metal 3 layer.
+   - Press `P` to fill the selected area with metal 3.
+
+2. **Create the VIA2 Mask:**
+   - Open the `tkcon` terminal in Magic.
+   - Enter the command: `cif see VIA2`.
+   - The area filled with metal 3 will now be linked to the VIA2 mask.
+
+![Screenshot 2024-09-02 130010](https://github.com/user-attachments/assets/f983c3c8-5210-4e62-9006-6079b1dd19b0)
+
+Screenshot of Fixed DRC 
+
+![image](https://github.com/user-attachments/assets/b1886f63-e0fa-4092-986a-0465d6afad6d)
+
+### **Lab exercise to fix Poly-9 error in Sky130 tech file**
+
+![Screenshot 2024-09-02 131751](https://github.com/user-attachments/assets/8887ca80-bf85-45ed-93ef-698255f76445)
+
+![Screenshot 2024-09-02 133730](https://github.com/user-attachments/assets/5521bd52-7a68-45ee-9e6b-3e293fb3f69b)
+
+Commands to Run in TKCon Window
+
+     # Load the updated tech file
+     tech load sky130A.tech
+
+     # Re-run DRC check to view updated DRC errors
+     drc check
+
+     # Select the region displaying the new errors and retrieve error messages
+     drc why
+
+Screenshot of Fixed DRC
+
+![image](https://github.com/user-attachments/assets/e55c1ae2-6329-46bd-9659-383371d0b688)
+
+### Lab exercise to fix Metal 2
+
+## Steps:
+
+1. **Filling an Area with Metal 2:**
+   - Open the Magic GUI.
+   - Select the desired area on your layout.
+   - Navigate to the metal 2 layer.
+   - Press `P` to fill the selected area with metal 2.
+
+2. **Creating the VIA1 Mask:**
+   - Open the `tkcon` terminal in Magic.
+   - Type the command: `cif see VIA1`.
+   - The filled metal 2 area will now be associated with the VIA1 mask.
+
+
+![image](https://github.com/user-attachments/assets/e6a1d31e-51eb-4a39-81df-0ba816a8b748)
+
+
+## Day 4
+
+## Pre-Layout STA and Clock Tree Synthesis
+
+In this session, we'll delve into timing modeling with delay tables and the process of translating grid information into track information. Here's a step-by-step breakdown:
+
+### Timing Modeling with Delay Tables
+
+1. **Delay Tables:**
+   - Delay tables provide crucial data on signal delays (propagation times) through various components like gates, wires, and interconnects.
+   - These tables are essential for estimating signal arrival times, ensuring proper timing throughout the design.
+
+2. **Application:**
+   - During physical design, delay tables are used to model the timing behavior of standard cells, macros, and other components.
+   - They guide placement and routing tools to optimize signal paths and achieve timing closure.
+
+### Converting Grid Information to Track Information
+
+1. **Objective:**
+   - The conversion of grid information (rows and columns) into track information is a key step in physical design.
+   - Tracks represent predefined horizontal and vertical routing paths on each metal layer.
+
+2. **Design Considerations:**
+   - When designing standard cells, it’s important to consider:
+     - Input and output ports should align with the intersections of vertical and horizontal tracks.
+     - The width of the standard cell should be an odd multiple of the track pitch, and its height an odd multiple of the vertical track pitch.
+
+3. **LEF File Extraction:**
+   - For further steps, you'll need to extract the LEF (Library Exchange Format) file for the Inverter cell.
+   - This file provides vital information needed for the place-and-route (PNR) process.
+
+4. **Understanding Tracks:**
+   - Review the `tracks.info` file to get details about the horizontal and vertical tracks available on each metal layer.
+   - This file includes information on pitch, spacing, and other factors critical for efficient routing.
+
+### Commands to Open the Custom Inverter Layout
+
+     # Navigate to the vsdstdcelldesign directory
+     cd /Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign
+
+     # Open the custom inverter layout using Magic
+     magic -T sky130A.tech sky130_inv.mag &
+
+Commands for tkcon Window to Set Grid as Tracks of Locali Layer
+
+     # Display the syntax for the grid command
+     help grid
+
+     # Set the grid values
+     grid 0.46um 0.34um 0.23um 0.17um
+
+Save the finalized layout with a custom name and open it using the following command:
+
+     # Command to save the layout
+     save sky130_vsdinv.mag
+
+![Screenshot 2024-09-01 121216](https://github.com/user-attachments/assets/f2044104-3e73-4bab-91c9-54af70ac2908)
+
+### Generating LEF Files
+
+To generate LEF files from the layout, follow these steps:
+
+1. **Write LEF File**:
+   In the `tkcon` window, execute the following command to write the LEF file:
+    
+         lef write
+    
+2. **Update Configuration**:
+   Edit the `config.tcl` file to:
+   - Change the library file as needed.
+   - Add the new LEF file to the OpenLane flow.
+
+   This ensures that the new LEF is included in your design process.
