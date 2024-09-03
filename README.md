@@ -826,7 +826,17 @@ againg run synthesis with these changes and then run floorplan and placement
 
 echo $::env(SYNTH_MAX_FANOUT)
 set ::env(SYNTH_MAX_FANOUT)  4
+
 run_synthesis
+
+run_floorplan
+
+init_floorplan
+place_io
+tap_decap_or
+
+run_placement
+```
 
 ![Screenshot 2024-09-01 195239](https://github.com/user-attachments/assets/044ba151-15ca-407e-be53-79e3a6c4697a)
 
