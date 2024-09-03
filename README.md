@@ -534,3 +534,61 @@ This guide covers the creation of a basic CMOS inverter netlist and the executio
    - The time required for the output to rise from Vol to Voh.
 3. **Fall Time (tf):**
    - The time required for the output to fall from Voh to Vol.
+
+### Parameters to Characterize
+
+1. **Rise Time:**
+   - The time taken for the output waveform to transition from 20% to 80% of its maximum value.
+   - Using data points:
+     - x0 = 2.16422e-09, y0 = 0.660027
+     - x1 = 2.20608e-09, y1 = 2.64019
+   - Rise time = x1 - x0 = 0.0418 ns
+
+![Screenshot 2024-09-01 112109](https://github.com/user-attachments/assets/a2b66377-4aa9-4613-b3a4-e5076038468b)
+
+
+2. **Fall Time:**
+   - The time taken for the output waveform to transition from 80% to 20% of its maximum value.
+   - Using data points:
+     - x0 = 4.04121e-09, y0 = 2.64021
+     - x1 = 4.06923e-09, y1 = 0.66
+   - Fall time = x1 - x0 = 0.0280 ns
+
+![Screenshot 2024-09-01 112606](https://github.com/user-attachments/assets/acbfb8ab-5599-4263-9aca-a6e3235d2390)
+
+3. **Propagation Delay:**
+   - The time taken for a 50% transition at the output (0 to 1) corresponding to a 50% transition at the input (1 to 0).
+   - Using data points:
+     - x0 = 2.14577e-09, y0 = 1.64533
+     - x1 = 2.18604e-09, y1 = 1.65
+   - Propagation delay = x1 - x0 = 0.04027 ns
+
+### LEF File Generation
+After successfully characterizing the inverter, the next step is to generate a LEF (Library Exchange Format) file.
+
+wget http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz
+
+
+**VLSI Layout Geometries and DRC Errors**
+
+This section examines various layout geometries (M3.1, M3.2, M3.5, and M3.6) and identifies the specific DRC (Design Rule Check) errors linked with each:
+
+1. **M3.1 (Metal Width DRC):**
+   - Error: The metal width does not comply with design rules.
+   - Violation: The width of the metal trace in M3.1 falls below the minimum specified threshold.
+
+2. **M3.2 (Metal Spacing DRC):**
+   - Error: Metal spacing violation detected.
+   - Violation: The spacing between adjacent metal traces in M3.2 does not meet the required minimum distance.
+
+3. **M3.5 (Via Overlapping DRC):**
+   - Error: Overlapping vias issue.
+   - Violation: Vias in M3.5 are overlapping, which is not allowed per design rules.
+
+4. **M3.6 (Minimum Area DRC):**
+   - Error: Minimum area violation.
+   - Violation: The enclosed area within M3.6 is below the specified minimum area requirement.
+
+open the Magic tool with the command
+
+     magic -d XR
