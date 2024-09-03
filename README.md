@@ -759,3 +759,71 @@ if { [file exists $filename] == 1} {
 	source $filename
 }
 ```
+![Screenshot 2024-09-01 162420](https://github.com/user-attachments/assets/07af2041-57d7-4194-8dc9-c7378cd368ff)
+
+Execute the OpenLane flow synthesis using the newly added custom inverter cell
+
+	  run_synthesis 
+
+Commands to view the parameters for improving timing and run synthesis
+
+```
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+set ::env(SYNTH_STRATEGY) 1
+echo $::env(SYNTH_BUFFERING)
+echo $::env(SYNTH_SIZING)
+set ::env(SYNTH_SIZING) 1
+echo $::env(SYNTH_DRIVING_CELL)
+
+run_synthesis
+```
+
+![Screenshot 2024-09-01 164205](https://github.com/user-attachments/assets/5af7f27b-f022-452b-bcd9-7dea0b2d8903)
+
+Running the Floor Plan
+
+To run the floor plan, use the following command:
+
+	  run_floorplan
+
+and now give the command:
+
+```tcl
+init_floorplan
+place_io
+tap_decap_or
+```
+
+and then, run placement
+
+	  run_placement
+
+![Screenshot 2024-09-01 173317](https://github.com/user-attachments/assets/a04884e6-fbca-4131-94e5-5bdcdbc7e9dd)
+
+Command to Inspect Internal Connectivity Layers
+`
+	  expand
+
+![Screenshot 2024-09-01 173551](https://github.com/user-attachments/assets/29529b8e-a4b1-4584-a762-edd5cbdaa185)
+
+![Screenshot 2024-09-01 173827](https://github.com/user-attachments/assets/e3d26073-25c7-43bd-86f0-54bdc8121ea0)
+
+![Screenshot 2024-09-01 174050](https://github.com/user-attachments/assets/087e3e38-9e43-460b-9c66-057014a25d87)
+
+Now do Post-Synthesis timing analysis using OpenSTA tool by creating constraints file `my_base.sdc` file
+
+![Screenshot 2024-09-01 194341](https://github.com/user-attachments/assets/6b99030d-7761-4b33-8491-3497909d8b36)
+
+Now create `pre_sta.conf` file to configure timing analysis using OpenSTA tool
+
+![Screenshot 2024-09-01 194435](https://github.com/user-attachments/assets/bca35d04-576b-4af5-a31c-febb0d1d3817)
+
+againg run synthesis with these changes and then run floorplan and placement
+
+	  run_synthesis
+
+![Screenshot 2024-09-01 195239](https://github.com/user-attachments/assets/044ba151-15ca-407e-be53-79e3a6c4697a)
+
+![Screenshot 2024-09-01 200157](https://github.com/user-attachments/assets/79b6a9f7-0ef6-4161-80ee-755286a9356b)
