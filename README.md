@@ -204,7 +204,7 @@ To start working with OpenLane, open your terminal and navigate to the following
 
 #### Running OpenLane in Docker
 
-Execute the following command to run OpenLane in Docker:
+Execute the following alias to run OpenLane in Docker:
 
      docker
 
@@ -249,3 +249,80 @@ To run the synthesis process, execute the following command:
 
 ![Screenshot 2024-08-29 130109](https://github.com/user-attachments/assets/b7e2b6b5-bf4d-4607-814b-d9b33a2a7a56)
 
+
+## Day 2
+
+## FloorPlan and Placement
+
+### Chip Floorplanning Considerations
+
+### Utilization Factor and Aspect Ratio
+
+To determine the Utilization Factor and Aspect Ratio, we first need to understand how to define the height and width of the core and die areas.
+
+- **Core**: The core area of a chip is where all the logic cells and components are placed. It is essentially the functional part of the chip.
+
+- **Die**: The die area surrounds the core and is used for placing I/O-related components.
+
+The dimensions of the core area are determined by the netlist of the design, which specifies the number and types of components needed. The height and width of the die area depend on the core area’s dimensions.
+
+For example, if a netlist includes two logic gates and two flip-flops, each with an area of 1 square unit, the netlist comprises four elements. Therefore, the minimum total area required for the core will be 4 square units.
+
+### Utilization Factor
+
+The Utilization Factor is defined as the ratio of the core area occupied by the netlist to the total core area. For an effective floor plan, the Utilization Factor should be less than 1. A Utilization Factor of 1 indicates that the core area is fully utilized, leaving no room for additional logic, which is typically undesirable.
+
+`Utilization Factor = (Area occupied by netlist / Total core area)`
+
+### Aspect Ratio
+
+The Aspect Ratio is the ratio of the core's height to its width. An Aspect Ratio of 1 signifies that the core is square-shaped, while a ratio other than 1 indicates a rectangular core.
+
+`Aspect Ratio = (Height of the core / Width of the core)`
+
+![image](https://github.com/user-attachments/assets/fa393d9b-ec3d-4060-bfe8-162736a9e373)
+
+In this example, the calculations are as follows:
+
+- **Utilization Factor**: (4 squnits)/(4 squnits) = 1
+
+- **Aspect Ratio**: (2 units)/(2 units) = 1
+
+   *Note: The core is square in shape.*
+
+![image](https://github.com/user-attachments/assets/30016e8a-fc19-438d-8943-91b6834e2919)
+
+In this example, the calculations are as follows:
+
+- **Utilization Factor**: (4 squnits)/(8 squnits) = 0.5
+
+- **Aspect Ratio**: (2 units)/(4 units) = 0.5
+
+   *Note: The core is rectangular in shape.*
+
+## Flowchart for running floorplan in OpenLane
+
+![image](https://github.com/user-attachments/assets/09e3819d-bf1b-42f1-9787-682824eb50bf)
+
+### Floorplan Configuration
+
+To ensure the floorplan runs smoothly, designers need to manage specific settings that impact the floorplan's configuration. For instance, parameters like the utilization factor and aspect ratio are critical switches that affect the floorplan. It is essential for designers to verify these settings before initializing the floorplan to ensure they align with the project's requirements. The image below illustrates the various switches available during the floorplan stage.
+
+To run the floorplan process, execute the following command:
+
+    run_floorplan
+
+![Screenshot 2024-08-29 184258](https://github.com/user-attachments/assets/84e3469a-35f6-4809-b4e0-959b71423829)
+
+![Screenshot 2024-08-29 184328](https://github.com/user-attachments/assets/8a11683b-b171-4c5e-9864-2ed027044e25)
+
+After completing the floorplan, you can evaluate the generated report to analyze aspects like die area. For graphical visualization of the design, utilize the MAGIC tool.
+
+
+
+![Screenshot 2024-08-29 185321](https://github.com/user-attachments/assets/d431d535-c40f-4020-b70c-73675b711a53)
+
+![Screenshot 2024-08-29 190224](https://github.com/user-attachments/assets/d4f3150a-a5e5-4895-908a-1222d10eefab)
+
+
+![Screenshot 2024-08-29 190323](https://github.com/user-attachments/assets/e74742ab-c6c8-497f-817a-c6ae759db84e)
