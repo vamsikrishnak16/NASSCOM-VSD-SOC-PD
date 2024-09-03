@@ -842,4 +842,7 @@ run_placement
 
 ![Screenshot 2024-09-01 200157](https://github.com/user-attachments/assets/79b6a9f7-0ef6-4161-80ee-755286a9356b)
 
+![Screenshot 2024-09-01 221229](https://github.com/user-attachments/assets/016c65f4-12fe-431d-a5b4-5917091be2d3)
+
+## Day 5
 
