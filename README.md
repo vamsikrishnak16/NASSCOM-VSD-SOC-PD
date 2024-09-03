@@ -540,12 +540,16 @@ To extract parasitics and characterize the cell design, use the following comman
 
 ![Screenshot 2024-08-31 163734](https://github.com/user-attachments/assets/3c1ee6cc-4de8-45b3-9ca6-3e46d5e8e39c)
 
+## Inverter Characterization with Sky130 Model Files
+
+This lab focuses on characterizing an inverter using `ngspice` and Sky130 model files. The objective is to extract essential parameters from the simulation results.
+Layout view of cmos inverter in MAGIC tool
+ [vsdstdcelldesign](https://github.com/nickson-jose/vsdstdcelldesign) 
+
 
 ![Screenshot 2024-08-31 111906](https://github.com/user-attachments/assets/e52dd281-0d1a-4054-86f7-bfa3e19f5ebc)
 
 
-Layout view of cmos inverter in MAGIC tool
- [vsdstdcelldesign](https://github.com/nickson-jose/vsdstdcelldesign) 
 
 Install ngspice tool by using the command in the openlane terminal
 
