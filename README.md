@@ -931,7 +931,7 @@ Understanding the concepts of tracks and routes is essential for designing effic
   - Routes link different components (or cells) within the chip.
   - They establish the wiring network that enables data flow across the chip.
 
-### `tracks.info` File
+### `tracks.info` file
 
 The `tracks.info` file contains:
 - Information about the horizontal and vertical tracks on each metal layer.
