@@ -877,17 +877,17 @@ The commands above reduce delay by constructing the Clock Tree Synthesis (CTS) u
 
 In OpenLANE, the Power Distribution Network (PDN) is essential for ensuring proper power delivery throughout the chip. Below are the steps to generate the PDN:
 
-## 1. PDN Generation
+### 1. PDN Generation
 
 - The PDN is responsible for delivering sufficient power to all standard cells and macros.
 - It establishes a network of power rails (VDD and VSS) across the entire chip.
 
-## 2. Utilizing the `gen_pdn` Procedure
+### 2. Utilizing the `gen_pdn` Procedure
 
 - The `gen_pdn` procedure is used to execute the PDN generation process.
 - It configures the power grid, defines the power rails, and ensures correct connectivity.
 
-## Common Issues
+### Common Issues
 
 1. **`LIB_SYNTH_COMPLETE`:**
    - This variable should be defined in the `config.tcl` file.
