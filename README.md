@@ -316,13 +316,33 @@ To run the floorplan process, execute the following command:
 
 ![Screenshot 2024-08-29 184328](https://github.com/user-attachments/assets/8a11683b-b171-4c5e-9864-2ed027044e25)
 
-After completing the floorplan, you can evaluate the generated report to analyze aspects like die area. For graphical visualization of the design, utilize the MAGIC tool.
+## Floorplan Layout Review in Magic
 
-Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-08_07-04/results/placement$ magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &
+After completing the floorplan, you can evaluate the generated report to analyze aspects like die area. For graphical visualization of the design, open the MAGIC tool by executing the code:
+
+     Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/29-08_07-04/results/floorplan$ magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def &
 
 ![Screenshot 2024-08-29 185321](https://github.com/user-attachments/assets/d431d535-c40f-4020-b70c-73675b711a53)
 
 ![Screenshot 2024-08-29 190224](https://github.com/user-attachments/assets/d4f3150a-a5e5-4895-908a-1222d10eefab)
 
-
 ![Screenshot 2024-08-29 190323](https://github.com/user-attachments/assets/e74742ab-c6c8-497f-817a-c6ae759db84e)
+
+### Aligning the Design:
+
+1. Press `S` to select the entire design.
+2. Press `V` to vertically center the design on the screen.
+
+### Zooming into a Specific Area:
+
+1. Click and drag to select the desired region.
+2. Right-click to open the context menu.
+3. Press `Z` to zoom into the selected area.
+
+### Viewing Cell Details:
+
+1. Position your cursor over the cell of interest.
+2. Press `S` to select the cell.
+3. In the `tkcon` window, type the command `what` to view details of the selected cell.
+
+![Screenshot 2024-08-29 200900](https://github.com/user-attachments/assets/a1a385db-7560-481f-b68a-cd2559684f0b)
