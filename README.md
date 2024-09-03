@@ -220,8 +220,8 @@ To start the tool in interactive mode, execute the following command:
 
 To import the required package and prepare the design, execute the command below:
 
-    % package require openlane 0.9
-    % prep -design picorv32a
+    package require openlane 0.9
+    prep -design picorv32a
 
 ![Screenshot 2024-08-29 123504](https://github.com/user-attachments/assets/73d536fc-c0a1-45ba-8031-c84ab22cb9f3)
 
@@ -230,11 +230,22 @@ To import the required package and prepare the design, execute the command below
 Once the preparation process is complete, a new directory, named with the current date, will be created inside the `runs` folder. This directory will contain all the required subdirectories for storing results, reports, and other relevant data. A new directory structure will be set up to organize the design files, with subdirectories designated for different components like results and reports.
 
 
-- **src**: Contains Verilog files and constraints file
+- **src**: Includes Verilog files and a constraints file
 - **LEF Merging**:
   The technology LEF (.tlef) and cell LEF (.lef) files are merged into a single format. The technology LEF contains layer information (e.g., metal layers), while the cell LEF includes cell information.
 
 - **Design Placement**:
   All design-related files are placed under the `designs` directory to ensure they are well-organized and accessible for subsequent steps.
 
- 
+## Synthesis
+
+To run the synthesis process, execute the following command:
+
+     run_synthesis
+
+![Screenshot 2024-08-29 125343](https://github.com/user-attachments/assets/49b71c39-0429-4573-9f14-b370c70c5fe1)
+
+![Screenshot 2024-08-29 130042](https://github.com/user-attachments/assets/a255c5d0-2d70-45bc-bc2a-a0059b451c89)
+
+![Screenshot 2024-08-29 130109](https://github.com/user-attachments/assets/b7e2b6b5-bf4d-4607-814b-d9b33a2a7a56)
+
